@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Bienvenido</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    "
+  >
+    <table
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      border="0"
+      style="background-color: #f4f4f4; padding: 30px 0"
+    >
+      <tr>
+        <td align="center">
+          <table
+            width="600"
+            cellpadding="0"
+            cellspacing="0"
+            border="0"
+            style="background-color: #ffffff; border-collapse: collapse"
+          >
+            <!-- Encabezado -->
+            <tr>
+              <td
+                bgcolor="#bb3d4b"
+                style="
+                  padding: 20px;
+                  text-align: center;
+                  color: white;
+                  font-size: 22px;
+                  font-weight: bold;
+                "
+              >
+                ¡Bienvenido a la App!
+              </td>
+            </tr>
+
+            <!-- Imagen -->
+            <tr>
+              <td align="center" style="padding: 20px">
+                <img
+                  src="https://photos-perfil-pcinbox.s3.us-east-1.amazonaws.com/logo/logo.png"
+                  alt="Logo"
+                  width="150"
+                  height="150"
+                  style="display: block; object-fit: contain"
+                />
+              </td>
+            </tr>
+
+            <!-- Cuerpo -->
+            <tr>
+              <td
+                align="center"
+                style="padding: 20px; font-size: 16px; color: #333"
+              >
+                <h2 style="margin-top: 0">¡Registro Exitoso!</h2>
+                <p style="margin: 0">
+                  Gracias por registrarte. Ahora puedes comenzar a usar nuestra
+                  aplicación.
+                </p>
+              </td>
+            </tr>
+
+            <!-- Botón -->
+            <tr>
+              <td align="center" style="padding: 20px">
+                <a
+                  href="<%= linkApp %>"
+                  style="
+                    display: inline-block;
+                    background-color: #bb3d4b;
+                    color: white;
+                    text-decoration: none;
+                    padding: 12px 24px;
+                    border-radius: 5px;
+                    font-weight: bold;
+                    cursor: pointer;
+                  "
+                >
+                  Ir al Panel
+                </a>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td
+                align="center"
+                style="padding: 20px; font-size: 12px; color: #888"
+              >
+                © 2025 PCinBOX Bajío. Todos los derechos reservados.
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bienvenido</title>
+    <style>
+      * {
+        font-family: Arial;
+      }
+      .container-forgot {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        width: 100%;
+
+        background: white;
+      }
+
+      .container .head {
+        width: 80%;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        background: #bb3d4b;
+        color: white;
+        padding-left: 30px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-top: 20px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+
+      .container .head span {
+        text-align: start;
+        color: white;
+        font-size: 22px;
+        font-weight: 600;
+      }
+
+      .card {
+        width: 100%;
+        margin: 20px auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        border: none;
+      }
+
+      .card .container-img {
+        width: 100%;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .card .container-body {
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      form {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      form .container-input {
+        display: flex;
+        width: 80%;
+      }
+
+      .container-input .container-icono-email {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 5px;
+        padding-right: 5px;
+        border: 1px solid #ccc;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+      input {
+        border: 1px solid #ccc;
+        width: 100%;
+        padding: 5px;
+      }
+
+      a {
+        margin-top: 20px;
+        width: 150px;
+        min-height: 35px;
+        border: none;
+        outline: none;
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+        background: #bb3d4b;
+        cursor: pointer;
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      button:hover {
+        filter: brightness(0.9);
+      }
+
+      @media (max-height: 690px) {
+        .container-forgot {
+          height: 100%;
+        }
+      }
+
+      @media (max-width: 575px) {
+        .container-input {
+          width: 65%;
+        }
+
+        .btn-send-email {
+          width: 65%;
+        }
+
+        .btn-send-email .container-icono {
+          width: 100%;
+          display: flex !important;
+          flex-direction: column !important;
+          padding: 0px !important;
+        }
+      }
+
+      @media (max-width: 400px) {
+        button {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-forgot">
+      <div class="container">
+        <div class="head">
+          <span>¡Bienvenido a la App!</span>
+        </div>
+
+        <div class="card">
+          <div class="container-img">
+            <img
+              alt=""
+              width="150"
+              height="150"
+              style="object-fit: contain"
+              src="<%= urlImg %>"
+            />
+          </div>
+
+          <div class="container-body">
+            <h2>¡Registro Exitoso!</h2>
+            <p>
+              Gracias por registrarte. Ahora puedes comenzar a usar nuestra
+              aplicación.
+            </p>
+
+            <a href="<%= linkApp %>">Ir al Panel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html> -->

@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MiTienda Virtual - Plataforma Web</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      /* Header */
+      .header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 0 2rem;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+      }
+
+      .logo {
+        font-size: 28px;
+        font-weight: bold;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+      }
+
+      .nav-links a:hover {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .search-box {
+        position: relative;
+        width: 300px;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 12px 45px 12px 20px;
+        border: none;
+        border-radius: 25px;
+        background: rgba(102, 126, 234, 0.1);
+        font-size: 14px;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .search-input:focus {
+        background: white;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .search-btn {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        cursor: pointer;
+        color: white;
+        font-size: 16px;
+        transition: all 0.3s ease;
+      }
+
+      .search-btn:hover {
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .cart-btn {
+        position: relative;
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .cart-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+      }
+
+      .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: #ff3838;
+        color: white;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+      }
+
+      /* Main Content */
+      .main-container {
+        max-width: 1400px;
+        margin: 100px auto 0;
+        padding: 2rem;
+      }
+
+      /* Hero Banner */
+      .hero-banner {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.95) 0%,
+          rgba(255, 255, 255, 0.8) 100%
+        );
+        backdrop-filter: blur(20px);
+        border-radius: 30px;
+        padding: 4rem 2rem;
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      .hero-banner::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(102,126,234,0.1)"/></svg>')
+          repeat;
+        animation: float 20s infinite linear;
+      }
+
+      .hero-title {
+        font-size: 3rem;
+        font-weight: bold;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-subtitle {
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .cta-button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        border-radius: 25px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 1;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+      }
+
+      /* Categories Section */
+      .section {
+        margin-bottom: 3rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+        color: white;
+        text-align: center;
+        margin-bottom: 2rem;
+        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .category-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .category-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+      }
+
+      .category-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      .category-card:hover::before {
+        left: 100%;
+      }
+
+      .category-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      .category-name {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.5rem;
+      }
+
+      .category-description {
+        color: #666;
+        font-size: 1rem;
+      }
+
+      /* Products Grid */
+      .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .product-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+      }
+
+      .product-image {
+        height: 200px;
+        background: linear-gradient(
+          45deg,
+          #ff9a9e 0%,
+          #fecfef 50%,
+          #fecfef 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        color: white;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .product-image::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        animation: shimmer 3s infinite;
+      }
+
+      .product-info {
+        padding: 2rem;
+      }
+
+      .product-name {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.5rem;
+      }
+
+      .product-description {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .product-price {
+        font-size: 1.5rem;
+        font-weight: bold;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+      }
+
+      .product-actions {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 15px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        flex: 1;
+      }
+
+      .btn-primary:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: #667eea;
+        border: 2px solid #667eea;
+        padding: 12px 24px;
+        border-radius: 15px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        flex: 1;
+      }
+
+      .btn-secondary:hover {
+        background: #667eea;
+        color: white;
+      }
+
+      /* Promo Section */
+      .promo-section {
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        border-radius: 30px;
+        padding: 3rem 2rem;
+        text-align: center;
+        color: white;
+        margin: 3rem 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .promo-section::before {
+        content: "🎉";
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        font-size: 3rem;
+        animation: bounce 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .promo-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      .promo-text {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+      }
+
+      /* Footer */
+      .footer {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 30px 30px 0 0;
+        padding: 3rem 2rem 2rem;
+        margin-top: 3rem;
+        text-align: center;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        text-align: left;
+      }
+
+      .footer-section h3 {
+        color: #333;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: #666;
+        text-decoration: none;
+        margin-bottom: 0.5rem;
+        transition: color 0.3s ease;
+      }
+
+      .footer-section a:hover {
+        color: #667eea;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        margin-top: 2rem;
+        border-top: 1px solid #eee;
+        color: #666;
+      }
+
+      /* Animations */
+      @keyframes float {
+        0% {
+          transform: translateX(0) translateY(0);
+        }
+        100% {
+          transform: translateX(-50px) translateY(-50px);
+        }
+      }
+
+      @keyframes shimmer {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .nav-container {
+          flex-direction: column;
+          height: auto;
+          padding: 1rem 0;
+        }
+
+        .nav-links {
+          margin: 1rem 0;
+        }
+
+        .search-box {
+          width: 100%;
+          margin-top: 1rem;
+        }
+
+        .hero-title {
+          font-size: 2rem;
+        }
+
+        .main-container {
+          margin-top: 180px;
+          padding: 1rem;
+        }
+
+        .categories-grid {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 1rem;
+        }
+
+        .products-grid {
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 1rem;
+        }
+
+        .product-actions {
+          flex-direction: column;
+        }
+      }
+
+      /* Notification */
+      .notification {
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 15px;
+        font-size: 0.9rem;
+        z-index: 1000;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+
+      .notification.show {
+        transform: translateX(0);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="nav-container">
+        <div class="logo">✨ MiTienda Virtual</div>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="#" onclick="navigateTo('inicio')">Inicio</a></li>
+            <li><a href="#" onclick="navigateTo('productos')">Productos</a></li>
+            <li><a href="#" onclick="navigateTo('ofertas')">Ofertas</a></li>
+            <li><a href="#" onclick="navigateTo('contacto')">Contacto</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <div class="search-box">
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Buscar productos..."
+              id="searchInput"
+            />
+            <button class="search-btn" onclick="performSearch()">🔍</button>
+          </div>
+          <button class="cart-btn" onclick="showCart()">
+            🛒 Carrito
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+      <!-- Hero Banner -->
+      <section class="hero-banner">
+        <h1 class="hero-title">Bienvenido a MiTienda</h1>
+        <p class="hero-subtitle">
+          Descubre productos increíbles con la mejor calidad y precios únicos
+        </p>
+        <button class="cta-button" onclick="exploreProducts()">
+          Explorar Productos
+        </button>
+      </section>
+
+      <!-- Promo Section -->
+      <section class="promo-section">
+        <h2 class="promo-title">¡Envío GRATUITO!</h2>
+        <p class="promo-text">
+          En todas las compras superiores a $500. Aprovecha esta oferta por
+          tiempo limitado.
+        </p>
+        <button class="cta-button" onclick="viewOffers()">Ver Ofertas</button>
+      </section>
+
+      <!-- Categories -->
+      <section class="section">
+        <h2 class="section-title">Categorías Populares</h2>
+        <div class="categories-grid">
+          <div class="category-card" onclick="selectCategory('Ropa y Moda')">
+            <span class="category-icon">👗</span>
+            <h3 class="category-name">Ropa y Moda</h3>
+            <p class="category-description">
+              Encuentra las últimas tendencias en moda
+            </p>
+          </div>
+          <div class="category-card" onclick="selectCategory('Tecnología')">
+            <span class="category-icon">📱</span>
+            <h3 class="category-name">Tecnología</h3>
+            <p class="category-description">
+              Dispositivos y gadgets innovadores
+            </p>
+          </div>
+          <div
+            class="category-card"
+            onclick="selectCategory('Hogar y Decoración')"
+          >
+            <span class="category-icon">🏠</span>
+            <h3 class="category-name">Hogar y Decoración</h3>
+            <p class="category-description">Todo para hacer tu hogar único</p>
+          </div>
+          <div
+            class="category-card"
+            onclick="selectCategory('Belleza y Cuidado')"
+          >
+            <span class="category-icon">💄</span>
+            <h3 class="category-name">Belleza y Cuidado</h3>
+            <p class="category-description">Productos para cuidar tu belleza</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Products -->
+      <section class="section">
+        <h2 class="section-title">Productos Destacados</h2>
+        <div class="products-grid">
+          <div class="product-card">
+            <div class="product-image">👗</div>
+            <div class="product-info">
+              <h3 class="product-name">Vestido Elegante</h3>
+              <p class="product-description">
+                Vestido perfecto para ocasiones especiales, confeccionado con
+                materiales de alta calidad.
+              </p>
+              <div class="product-price">$599</div>
+              <div class="product-actions">
+                <button
+                  class="btn-primary"
+                  onclick="addToCart('Vestido Elegante', 599)"
+                >
+                  Agregar al Carrito
+                </button>
+                <button
+                  class="btn-secondary"
+                  onclick="viewProduct('Vestido Elegante')"
+                >
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div
+              class="product-image"
+              style="
+                background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+              "
+            >
+              🎧
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Auriculares Bluetooth Pro</h3>
+              <p class="product-description">
+                Audio de alta fidelidad con cancelación de ruido activa y
+                batería de larga duración.
+              </p>
+              <div class="product-price">$1,299</div>
+              <div class="product-actions">
+                <button
+                  class="btn-primary"
+                  onclick="addToCart('Auriculares Bluetooth Pro', 1299)"
+                >
+                  Agregar al Carrito
+                </button>
+                <button
+                  class="btn-secondary"
+                  onclick="viewProduct('Auriculares Bluetooth Pro')"
+                >
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div
+              class="product-image"
+              style="
+                background: linear-gradient(45deg, #fa709a 0%, #fee140 100%);
+              "
+            >
+              💡
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Lámpara LED Inteligente</h3>
+              <p class="product-description">
+                Iluminación inteligente con control por app, múltiples colores y
+                modos de luz.
+              </p>
+              <div class="product-price">$899</div>
+              <div class="product-actions">
+                <button
+                  class="btn-primary"
+                  onclick="addToCart('Lámpara LED Inteligente', 899)"
+                >
+                  Agregar al Carrito
+                </button>
+                <button
+                  class="btn-secondary"
+                  onclick="viewProduct('Lámpara LED Inteligente')"
+                >
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div
+              class="product-image"
+              style="
+                background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%);
+              "
+            >
+              💎
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Kit de Maquillaje Premium</h3>
+              <p class="product-description">
+                Set completo de maquillaje profesional con productos de marcas
+                reconocidas.
+              </p>
+              <div class="product-price">$1,599</div>
+              <div class="product-actions">
+                <button
+                  class="btn-primary"
+                  onclick="addToCart('Kit de Maquillaje Premium', 1599)"
+                >
+                  Agregar al Carrito
+                </button>
+                <button
+                  class="btn-secondary"
+                  onclick="viewProduct('Kit de Maquillaje Premium')"
+                >
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div
+              class="product-image"
+              style="
+                background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+              "
+            >
+              ⌚
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Smartwatch Deportivo</h3>
+              <p class="product-description">
+                Reloj inteligente con monitor de salud, GPS y resistencia al
+                agua.
+              </p>
+              <div class="product-price">$2,199</div>
+              <div class="product-actions">
+                <button
+                  class="btn-primary"
+                  onclick="addToCart('Smartwatch Deportivo', 2199)"
+                >
+                  Agregar al Carrito
+                </button>
+                <button
+                  class="btn-secondary"
+                  onclick="viewProduct('Smartwatch Deportivo')"
+                >
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div
+              class="product-image"
+              style="
+                background: linear-gradient(45deg, #ff6b6b 0%, #ffa726 100%);
+              "
+            >
+              📚
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Set de Libros Bestsellers</h3>
+              <p class="product-description">
+                Colección de los libros más vendidos del año, perfectos para
+                regalar.
+              </p>
+              <div class="product-price">$799</div>
+              <div class="product-actions">
+                <button
+                  class="btn-primary"
+                  onclick="addToCart('Set de Libros Bestsellers', 799)"
+                >
+                  Agregar al Carrito
+                </button>
+                <button
+                  class="btn-secondary"
+                  onclick="viewProduct('Set de Libros Bestsellers')"
+                >
+                  Ver Detalles
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Sobre Nosotros</h3>
+          <p>
+            MiTienda Virtual es tu destino confiable para encontrar productos de
+            calidad con los mejores precios del mercado.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Atención al Cliente</h3>
+          <a href="#">Centro de Ayuda</a><br />
+          <a href="#">Política de Devoluciones</a><br />
+          <a href="#">Términos y Condiciones</a><br />
+          <a href="#">Contacto</a>
+        </div>
+        <div class="footer-section">
+          <h3>Síguenos</h3>
+          <a href="#">Facebook</a><br />
+          <a href="#">Instagram</a><br />
+          <a href="#">Twitter</a><br />
+          <a href="#">YouTube</a>
+        </div>
+        <div class="footer-section">
+          <h3>Métodos de Pago</h3>
+          <p>💳 Tarjetas de Crédito/Débito</p>
+          <p>🏦 Transferencias Bancarias</p>
+          <p>📱 Pagos Digitales</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 MiTienda Virtual. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+  </body>
+</html>

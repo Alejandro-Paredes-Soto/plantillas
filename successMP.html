@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago Exitoso</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #00a650;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.5s ease-out 0.2s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .checkmark svg {
+            width: 50px;
+            height: 50px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: drawCheck 0.5s ease-out 0.5s forwards;
+        }
+
+        @keyframes drawCheck {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .details {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .detail-value {
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .total-row {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #00a650;
+        }
+
+        .total-row .detail-value {
+            color: #00a650;
+            font-size: 20px;
+        }
+
+        .btn {
+            background: #00a650;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .btn:hover {
+            background: #009040;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 166, 80, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .mp-logo {
+            margin-top: 30px;
+            opacity: 0.5;
+        }
+
+        .mp-logo img {
+            width: 120px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="checkmark">
+            <svg viewBox="0 0 52 52">
+                <polyline points="14 27 22 35 38 19"/>
+            </svg>
+        </div>
+
+        <h1>¡Pago Exitoso!</h1>
+        <p class="subtitle">Tu transacción ha sido procesada correctamente</p>
+
+        <div class="details">
+            <div class="detail-row">
+                <span class="detail-label">ID de Transacción</span>
+                <span class="detail-value">#MP123456789</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Fecha</span>
+                <span class="detail-value">22 Oct 2025, 10:30 AM</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Método de Pago</span>
+                <span class="detail-value">Visa •••• 4242</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Concepto</span>
+                <span class="detail-value">Compra de producto</span>
+            </div>
+            <div class="detail-row total-row">
+                <span class="detail-label">Total Pagado</span>
+                <span class="detail-value">$1,250.00 MXN</span>
+            </div>
+        </div>
+
+        <div>
+            <button class="btn" onclick="window.print()">Descargar Comprobante</button>
+            <a href="#" class="btn btn-secondary">Volver al Inicio</a>
+        </div>
+
+        <div class="mp-logo">
+            <p style="color: #666; font-size: 12px;">Procesado por</p>
+            <p style="color: #009ee3; font-weight: bold; font-size: 18px; margin-top: 5px;">Mercado Pago</p>
+        </div>
+    </div>
+</body>
+</html>
